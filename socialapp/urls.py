@@ -16,12 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from api import views
+from rest_framework.authtoken.views import ObtainAuthToken
+
 from rest_framework.routers import DefaultRouter
 router=DefaultRouter()
+router.register("api/v2/posts",views.ModelViewSet,basename="mposts")
 router.register("posts",views.PostsView,basename="posts")
-
 router.register("account/signup",views.UserView,basename="user")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("token",ObtainAuthToken.as_view())
+
 ]+router.urls
